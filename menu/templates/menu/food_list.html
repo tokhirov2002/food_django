@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Menu - Bistro Bliss</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: #ff6b35;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #ff6b35;
+        }
+
+        .book-btn {
+            background: #ff6b35;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-decoration: none;
+        }
+
+        .book-btn:hover {
+            background: #e55a2b;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 4rem 0;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: transparent;
+            border: 2px solid #ddd;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: #ff6b35;
+            color: white;
+            border-color: #ff6b35;
+        }
+
+        /* Food Grid */
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .food-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .food-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .food-info {
+            padding: 1.5rem;
+        }
+
+        .food-price {
+            color: #ff6b35;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .food-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .food-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #e55a2b;
+        }
+
+        /* Delivery Apps Section */
+        .delivery-apps {
+            background: #f8f9fa;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .delivery-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .delivery-subtitle {
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .app-logo {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .app-logo:hover {
+            transform: translateY(-5px);
+        }
+
+        .app-logo img {
+            width: 100%;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ff6b35;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #ff6b35;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #555;
+            padding-top: 1rem;
+            text-align: center;
+            color: #ccc;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .category-filter {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-section">
+                <div class="logo">B</div>
+                <span class="logo-text">Bistro Bliss</span>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About</a></li>
+                    <li><a href="/menu/" class="active">Menu</a></li>
+                    <li><a href="/blog/">Pages</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="/book-table/" class="book-btn">Book a Table</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="section-container">
+            <h1 class="section-title">Our Menu</h1>
+            <p class="section-subtitle">We consider all the drivers of change gives you the components you need to change to create a truly happens.</p>
+
+            <!-- Category Filter -->
+            <div class="category-filter">
+                <button class="category-btn active" onclick="filterCategory('all')">All</button>
+                {% for category in categories %}
+                <button class="category-btn" onclick="filterCategory('{{ category.name|lower }}')">{{ category.name }}</button>
+                {% endfor %}
+            </div>
+
+            <!-- Food Grid -->
+            <div class="food-grid">
+                {% for food in foods %}
+                <div class="food-card" data-category="{{ food.category.name|lower }}">
+                    <img src="{{ food.image.url }}" alt="{{ food.name }}" class="food-image">
+                    <div class="food-info">
+                        <div class="food-price">${{ food.price }}</div>
+                        <h3 class="food-name">{{ food.name }}</h3>
+                        <p class="food-description">{{ food.description|truncatewords:15 }}</p>
+                        <form method="post" action="{% url 'add_to_cart' food.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Delivery Apps Section -->
+        <section class="delivery-apps">
+            <div class="section-container">
+                <h2 class="delivery-title">You can order through apps</h2>
+                <p class="delivery-subtitle">Lorem ipsum dolor sit amet consectetur adipiscing elit enim bibendum sed et aliquet aliquet risus tempor semper.</p>
+                <div class="apps-grid">
+                    <div class="app-logo">
+                        <img src="/placeholder.svg?height=40&width=120&text=UberEats" alt="Uber Eats">
+                    </div>
+                    <div class="app-logo">
+                        <img src="/placeholder.svg?height=40&width=120&text=Grubhub" alt="Grubhub">
+                    </div>
+                    <div class="app-logo">
+                        <img src="/placeholder.svg?height=40&width=120&text=Postmates" alt="Postmates">
+                    </div>
+                    <div class="app-logo">
+                        <img src="/placeholder.svg?height=40&width=120&text=DoorDash" alt="DoorDash">
+                    </div>
+                    <div class="app-logo">
+                        <img src="/placeholder.svg?height=40&width=120&text=Foodpanda" alt="Foodpanda">
+                    </div>
+                    <div class="app-logo">
+                        <img src="/placeholder.svg?height=40&width=120&text=Deliveroo" alt="Deliveroo">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="section-container">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <div class="logo-section">
+                        <div class="logo">B</div>
+                        <span class="logo-text" style="color: white;">Bistro Bliss</span>
+                    </div>
+                    <p style="margin-top: 1rem; color: #ccc;">In the new era of technology we look a future with certainty and pride to for our company and.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Pages</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/menu/">Menu</a></li>
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Utility Pages</h3>
+                    <ul>
+                        <li><a href="#">Start Here</a></li>
+                        <li><a href="#">Styleguide</a></li>
+                        <li><a href="#">Password Protected</a></li>
+                        <li><a href="#">404 Not Found</a></li>
+                        <li><a href="#">Licenses</a></li>
+                        <li><a href="#">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow us on Instagram</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 1rem;">
+                        <img src="/placeholder.svg?height=80&width=80" alt="Instagram post" style="border-radius: 8px;">
+                        <img src="/placeholder.svg?height=80&width=80" alt="Instagram post" style="border-radius: 8px;">
+                        <img src="/placeholder.svg?height=80&width=80" alt="Instagram post" style="border-radius: 8px;">
+                        <img src="/placeholder.svg?height=80&width=80" alt="Instagram post" style="border-radius: 8px;">
+                        <img src="/placeholder.svg?height=80&width=80" alt="Instagram post" style="border-radius: 8px;">
+                        <img src="/placeholder.svg?height=80&width=80" alt="Instagram post" style="border-radius: 8px;">
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Copyright © 2023 Bistro Bliss</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function filterCategory(category) {
+            const cards = document.querySelectorAll('.food-card');
+            const buttons = document.querySelectorAll('.category-btn');
+            
+            // Remove active class from all buttons
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Show/hide cards based on category
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

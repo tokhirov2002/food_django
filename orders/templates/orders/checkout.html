@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Bistro Bliss</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        /* Header Styles */
+        .header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: #ff6b35;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: #ff6b35;
+        }
+
+        .book-btn {
+            background: #ff6b35;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-decoration: none;
+        }
+
+        .book-btn:hover {
+            background: #e55a2b;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 4rem 0;
+            min-height: calc(100vh - 80px);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 3rem;
+        }
+
+        /* Checkout Form */
+        .checkout-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #333;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-input,
+        .form-select {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+
+        .form-input::placeholder {
+            color: #999;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .payment-method {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .payment-method:hover {
+            border-color: #ff6b35;
+        }
+
+        .payment-method.selected {
+            border-color: #ff6b35;
+            background: #fff5f0;
+        }
+
+        .payment-method input[type="radio"] {
+            margin: 0;
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .payment-info {
+            flex: 1;
+        }
+
+        .payment-name {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .payment-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #333;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .order-items {
+            margin-bottom: 1.5rem;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 60px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            color: #333;
+        }
+
+        .item-quantity {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .summary-row.total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #ff6b35;
+            border-top: 2px solid #f0f0f0;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .place-order-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .place-order-btn:hover {
+            background: #e55a2b;
+        }
+
+        .place-order-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Security Info */
+        .security-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .security-info i {
+            color: #28a745;
+            margin-right: 0.5rem;
+        }
+
+        .security-info span {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .checkout-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .order-summary {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-section">
+                <div class="logo">B</div>
+                <span class="logo-text">Bistro Bliss</span>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About</a></li>
+                    <li><a href="/menu/">Menu</a></li>
+                    <li><a href="/blog/">Pages</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="/book-table/" class="book-btn">Book a Table</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="section-container">
+            <h1 class="page-title">Checkout</h1>
+            
+            <div class="checkout-container">
+                <!-- Checkout Form -->
+                <div class="checkout-form">
+                    <form method="post" id="checkout-form">
+                        {% csrf_token %}
+                        
+                        <!-- Delivery Information -->
+                        <div class="form-section">
+                            <h2 class="section-title">Delivery Information</h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-input" name="first_name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-input" name="last_name" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-input" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Phone</label>
+                                    <input type="tel" class="form-input" name="phone" required>
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label">Address</label>
+                                <input type="text" class="form-input" name="address" placeholder="Street address" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-input" name="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">ZIP Code</label>
+                                    <input type="text" class="form-input" name="zip_code" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Delivery Options -->
+                        <div class="form-section">
+                            <h2 class="section-title">Delivery Options</h2>
+                            <div class="payment-methods">
+                                <label class="payment-method">
+                                    <input type="radio" name="delivery_option" value="standard" checked>
+                                    <div class="payment-icon">
+                                        <i class="fas fa-truck"></i>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="payment-name">Standard Delivery</div>
+                                        <div class="payment-desc">30-45 minutes • Free</div>
+                                    </div>
+                                </label>
+                                <label class="payment-method">
+                                    <input type="radio" name="delivery_option" value="express">
+                                    <div class="payment-icon">
+                                        <i class="fas fa-bolt"></i>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="payment-name">Express Delivery</div>
+                                        <div class="payment-desc">15-20 minutes • $5.00</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="form-section">
+                            <h2 class="section-title">Payment Method</h2>
+                            <div class="payment-methods">
+                                <label class="payment-method">
+                                    <input type="radio" name="payment_method" value="card" checked>
+                                    <div class="payment-icon">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="payment-name">Credit/Debit Card</div>
+                                        <div class="payment-desc">Visa, Mastercard, American Express</div>
+                                    </div>
+                                </label>
+                                <label class="payment-method">
+                                    <input type="radio" name="payment_method" value="paypal">
+                                    <div class="payment-icon">
+                                        <i class="fab fa-paypal"></i>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="payment-name">PayPal</div>
+                                        <div class="payment-desc">Pay with your PayPal account</div>
+                                    </div>
+                                </label>
+                                <label class="payment-method">
+                                    <input type="radio" name="payment_method" value="cash">
+                                    <div class="payment-icon">
+                                        <i class="fas fa-money-bill"></i>
+                                    </div>
+                                    <div class="payment-info">
+                                        <div class="payment-name">Cash on Delivery</div>
+                                        <div class="payment-desc">Pay when your order arrives</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Card Details (shown when card is selected) -->
+                        <div class="form-section" id="card-details">
+                            <h2 class="section-title">Card Details</h2>
+                            <div class="form-group full-width">
+                                <label class="form-label">Card Number</label>
+                                <input type="text" class="form-input" name="card_number" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Expiry Date</label>
+                                    <input type="text" class="form-input" name="expiry_date" placeholder="MM/YY">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">CVV</label>
+                                    <input type="text" class="form-input" name="cvv" placeholder="123">
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label">Cardholder Name</label>
+                                <input type="text" class="form-input" name="cardholder_name" placeholder="John Doe">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2 class="summary-title">Order Summary</h2>
+                    
+                    <div class="order-items">
+                        {% for item in items %}
+                        <div class="order-item">
+                            <img src="{{ item.food.image.url }}" alt="{{ item.food.name }}" class="item-image">
+                            <div class="item-details">
+                                <div class="item-name">{{ item.food.name }}</div>
+                                <div class="item-quantity">Qty: {{ item.quantity }}</div>
+                            </div>
+                            <div class="item-price">${{ item.food.price }}</div>
+                        </div>
+                        {% empty %}
+                        <div class="order-item">
+                            <div style="text-align: center; width: 100%; color: #666;">
+                                No items in cart
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">${{ subtotal|default:"0.00" }}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery:</span>
+                        <span id="delivery-fee">Free</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (8%):</span>
+                        <span id="tax">${{ tax|default:"0.00" }}</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="total">${{ total|default:"0.00" }}</span>
+                    </div>
+
+                    <button type="submit" form="checkout-form" class="place-order-btn">
+                        Place Order
+                    </button>
+
+                    <div class="security-info">
+                        <i class="fas fa-lock"></i>
+                        <span>Your payment information is secure and encrypted</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Payment method selection
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Remove selected class from all payment methods
+                document.querySelectorAll('.payment-method').forEach(method => {
+                    method.classList.remove('selected');
+                });
+                
+                // Add selected class to current method
+                this.closest('.payment-method').classList.add('selected');
+                
+                // Show/hide card details
+                const cardDetails = document.getElementById('card-details');
+                if (this.value === 'card') {
+                    cardDetails.style.display = 'block';
+                } else {
+                    cardDetails.style.display = 'none';
+                }
+            });
+        });
+
+        // Delivery option selection
+        document.querySelectorAll('input[name="delivery_option"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                // Remove selected class from all delivery options
+                document.querySelectorAll('.payment-method').forEach(method => {
+                    method.classList.remove('selected');
+                });
+                
+                // Add selected class to current option
+                this.closest('.payment-method').classList.add('selected');
+                
+                // Update delivery fee
+                const deliveryFee = document.getElementById('delivery-fee');
+                if (this.value === 'express') {
+                    deliveryFee.textContent = '$5.00';
+                } else {
+                    deliveryFee.textContent = 'Free';
+                }
+                
+                // Recalculate total (you would implement this based on your backend logic)
+                updateTotal();
+            });
+        });
+
+        // Initialize selected payment method
+        document.querySelector('input[name="payment_method"]:checked').closest('.payment-method').classList.add('selected');
+        document.querySelector('input[name="delivery_option"]:checked').closest('.payment-method').classList.add('selected');
+
+        function updateTotal() {
+            // This would typically be handled by your backend
+            // For demo purposes, we'll just update the display
+            const subtotal = parseFloat(document.getElementById('subtotal').textContent.replace('$', ''));
+            const deliveryFee = document.getElementById('delivery-fee').textContent === 'Free' ? 0 : 5.00;
+            const tax = subtotal * 0.08;
+            const total = subtotal + deliveryFee + tax;
+            
+            document.getElementById('tax').textContent = '$' + tax.toFixed(2);
+            document.getElementById('total').textContent = '$' + total.toFixed(2);
+        }
+
+        // Form submission
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitBtn = document.querySelector('.place-order-btn');
+            submitBtn.textContent = 'Processing...';
+            submitBtn.disabled = true;
+            
+            // Simulate order processing
+            setTimeout(() => {
+                alert('Order placed successfully! You will receive a confirmation email shortly.');
+                window.location.href = '/';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
